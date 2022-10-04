@@ -11,8 +11,16 @@
  */
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Resources;
-using MetaDataXMLGenrator.Core.Config;
+using CommunityToolkit.Mvvm.Input;
+using MetaDataXMLGenerator.Core.Config;
+using MetaDataXMLGenerator.Core.Constants;
+using MetaDataXMLGenerator.Core.Services;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Threading;
+using FolderBrowserDialog = FolderBrowserEx.FolderBrowserDialog;
 
 namespace MetaDataXMLGenerator.WPF.ViewModels;
 
@@ -21,29 +29,99 @@ public partial class ContentViewModel
 {
     #region Fields
 
-    private IniFileReader _iniReader;
-    private string _infilePath = "Resources\\Settings.ini";
+    private readonly IniFileReader _iniReader;
+    private readonly string? _infilePath = ConstantStrings.INIFILEPATH;
+    private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+
+   
+
 
     #endregion
 
     #region Properties
 
     [ObservableProperty] 
-    private string _localPath;
+    private string? _localPath;
+    [ObservableProperty]
+    private string? _url;
+    [ObservableProperty] 
+    private  float _numberOfFiles;
+    [ObservableProperty] 
+    private float _counter;
+    [ObservableProperty] private float _currentProgressValue;
+    private float _result;
+    [ObservableProperty] 
+    private bool _progressVisibility;
+
 
     #endregion
 
     #region Constructor
-    // ToDo: https://devblogs.microsoft.com/dotnet/announcing-the-dotnet-community-toolkit-800/
     public ContentViewModel()
     {
         _iniReader = new IniFileReader(_infilePath);
-        LocalPath = _iniReader.Read("RootPath", "LocalPath");
+        LocalPath = _iniReader.Read("RootPath", "Local");
+        Url = _iniReader.Read("RootPath", "Web");
     }
+
     #endregion
 
     #region Methods
 
+    private void SetupDispatcherTimer()
+    {
+        _dispatcherTimer.Tick += dispatcherTimer_Tick!;
+        _dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0, 60);
+        _dispatcherTimer.Start();
+    }
+
+    [RelayCommand]
+    private void OpenFolder()
+    {
+        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        folderBrowserDialog.Title = "Lokaler Pfad";
+        folderBrowserDialog.AllowMultiSelect = false;
+        folderBrowserDialog.InitialFolder = @"C:\";
+        if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+        {
+            LocalPath = folderBrowserDialog.SelectedFolder;
+            _iniReader.Write("RootPath", LocalPath,"Local");
+            
+        }
+    }
+    [RelayCommand]
+    private void SaveUrl()
+    {
+        _iniReader.Write("RootPath",Url,"Web");
+    }
+
+    [RelayCommand]
+    private void GenerateFiles()
+    {
+        DirectoryAndFileReader dafr = new DirectoryAndFileReader(LocalPath);
+        dafr.OnNumberOfFilesChanged += OnNumberOfFilesChanged;
+        ProgressVisibility = true;
+        dafr.Run();
+        SetupDispatcherTimer();
+
+    }
+
+    private void OnNumberOfFilesChanged(object sender, int e, int c)
+    {
+        NumberOfFiles = e;
+        Counter = c;
+        _result = (100 / NumberOfFiles) * Counter;
+
+    }
+    private void dispatcherTimer_Tick(object sender, EventArgs e)
+    {
+       
+        CurrentProgressValue += _result;
+        if (CurrentProgressValue >= 100)
+        {
+            ProgressVisibility = false;
+        }
+    }
     #endregion
 
 }

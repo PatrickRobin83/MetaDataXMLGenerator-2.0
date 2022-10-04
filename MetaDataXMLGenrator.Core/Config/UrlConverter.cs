@@ -12,7 +12,7 @@
 
 using System.Net;
 
-namespace MetaDataXMLGenrator.Core.Config;
+namespace MetaDataXMLGenerator.Core.Config;
 
 public static class UrlConverter
 {
@@ -21,7 +21,7 @@ public static class UrlConverter
     /// </summary>
     /// <param name="stringToConvert"></param>
     /// <returns></returns>
-    public static string convert(string stringToConvert)
+    public static string Convert(string stringToConvert)
     {
         if (stringToConvert == null) throw new ArgumentNullException(nameof(stringToConvert));
         string url = stringToConvert;

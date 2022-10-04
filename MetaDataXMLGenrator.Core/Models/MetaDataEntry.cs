@@ -10,7 +10,7 @@
  * @Version      1.0.0
  */
 
-namespace MetaDataXMLGenrator.Core.Models;
+namespace MetaDataXMLGenerator.Core.Models;
 
 public class MetaDataEntry
 {

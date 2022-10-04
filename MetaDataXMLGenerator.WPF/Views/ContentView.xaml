@@ -9,11 +9,42 @@
              d:DesignHeight="450" d:DesignWidth="800"
              BorderBrush="DimGray" BorderThickness="2" Padding="5" 
              FontSize="18">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
     <StackPanel>
         <TextBlock Text="Verzeichnis in dem gesucht werden soll:" Foreground="Black"/> 
-        <StackPanel Orientation="Horizontal">
-            <TextBox Width="600" HorizontalAlignment="Left" IsEnabled="False" Text="{Binding LocalPath}"></TextBox>
+        <StackPanel Orientation="Horizontal" Margin="0 10 0 0"> 
+            <TextBox Width="600" HorizontalAlignment="Left" IsEnabled="False" Text="{Binding LocalPath}"/>
             <Button Height="Auto" Width="50" Padding="2" Margin="15 0 0 0" Content="..." Command="{Binding OpenFolderCommand}"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="0 10 0 0">
+            <TextBlock Text="URL:(Beispiel: https://www.smartperform.de/wp-content/downloads/sales_kit/)"/>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <TextBox MinWidth="600" MaxWidth="780" HorizontalAlignment="Left" Text="{Binding Url}"/>
+                <Button Height="Auto" Width="100" Padding="2" Margin="15 0 0 0" Content="Speichern" Command="{Binding SaveUrlCommand}"/>
+            </StackPanel>
+        </StackPanel>
+        <Button Content="MetaData.xml generieren" Height="Auto" Width="250" 
+                HorizontalAlignment="Center" Margin="0 60 0 0" 
+                Command="{Binding GenerateFilesCommand}"/>
+        <StackPanel Orientation="Horizontal" Margin="0 50 10 0 ">
+            <TextBlock Text="Fortschritt:" Margin="100 0 30 0"
+                       Visibility="{Binding ProgressVisibility, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+           <Grid Visibility="{Binding ProgressVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+               <ProgressBar Height="30" Width="400" Name="pbStatus"
+                            Value="{Binding CurrentProgressValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Minimum="0"  Maximum="100"/>
+               <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+           </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" 
+                    Visibility="{Binding ProgressVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="{Binding Counter}"/>
+            <TextBlock Text=" von "/>
+            <TextBlock Text="{Binding NumberOfFiles}"/>
+
         </StackPanel>
     </StackPanel>
 </UserControl>
