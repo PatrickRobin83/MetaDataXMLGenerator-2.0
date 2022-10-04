@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDataXMLGenerator.WPF", "MetaDataXMLGenerator.WPF\MetaDataXMLGenerator.WPF.csproj", "{A8638090-F0DF-4C12-8189-BA10913E42F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDataXMLGenrator.Core", "MetaDataXMLGenrator.Core\MetaDataXMLGenrator.Core.csproj", "{E70ACE9E-913A-4728-A898-1EF4BFDD5233}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8638090-F0DF-4C12-8189-BA10913E42F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8638090-F0DF-4C12-8189-BA10913E42F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8638090-F0DF-4C12-8189-BA10913E42F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8638090-F0DF-4C12-8189-BA10913E42F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E70ACE9E-913A-4728-A898-1EF4BFDD5233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70ACE9E-913A-4728-A898-1EF4BFDD5233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70ACE9E-913A-4728-A898-1EF4BFDD5233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70ACE9E-913A-4728-A898-1EF4BFDD5233}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AAD7D324-D358-4357-BA1A-5416034BB571}
+	EndGlobalSection
+EndGlobal
