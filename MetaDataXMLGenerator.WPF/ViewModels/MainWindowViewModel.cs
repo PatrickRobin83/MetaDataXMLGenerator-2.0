@@ -38,15 +38,11 @@ public partial class MainWindowViewModel
 
     public MainWindowViewModel()
     {
-        InitializeViewsAndDataContext();
     }
     #endregion
 
     #region Methods
 
-    private void InitializeViewsAndDataContext()
-    {
-    }   
     [RelayCommand]
     private void Exit()
     {
