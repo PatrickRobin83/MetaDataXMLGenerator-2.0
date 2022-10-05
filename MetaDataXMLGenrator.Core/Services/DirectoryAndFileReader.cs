@@ -38,7 +38,6 @@ public class DirectoryAndFileReader
     #region Events
 
     public delegate void NumberOfFilesChanged(object sender, int allFiles, int countValue);
-
     public event NumberOfFilesChanged? OnNumberOfFilesChanged;
     #endregion
 
@@ -107,7 +106,7 @@ public class DirectoryAndFileReader
                         }
                     }
                     MetaDataFileWriter.WriteMetaDataXml(rootFolder, metaDataEntries);
-                    await Task.Delay(30);
+                    await Task.Delay(75);
                 }
             }
 

@@ -68,13 +68,6 @@ public partial class ContentViewModel
 
     #region Methods
 
-    private void SetupDispatcherTimer()
-    {
-        _dispatcherTimer.Tick += dispatcherTimer_Tick!;
-        _dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0, 60);
-        _dispatcherTimer.Start();
-    }
-
     [RelayCommand]
     private void OpenFolder()
     {
@@ -102,7 +95,6 @@ public partial class ContentViewModel
         dafr.OnNumberOfFilesChanged += OnNumberOfFilesChanged;
         ProgressVisibility = true;
         dafr.Run();
-        SetupDispatcherTimer();
 
     }
 
@@ -111,16 +103,12 @@ public partial class ContentViewModel
         NumberOfFiles = e;
         Counter = c;
         _result = (100 / NumberOfFiles) * Counter;
-
-    }
-    private void dispatcherTimer_Tick(object sender, EventArgs e)
-    {
-       
-        CurrentProgressValue += _result;
+        CurrentProgressValue = _result;
         if (CurrentProgressValue >= 100)
         {
             ProgressVisibility = false;
         }
+
     }
     #endregion
 

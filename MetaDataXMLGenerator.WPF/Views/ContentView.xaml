@@ -44,6 +44,7 @@
             <TextBlock Text="{Binding Counter}"/>
             <TextBlock Text=" von "/>
             <TextBlock Text="{Binding NumberOfFiles}"/>
+            <TextBlock Text=" Dateien verarbeitet"/>
 
         </StackPanel>
     </StackPanel>
