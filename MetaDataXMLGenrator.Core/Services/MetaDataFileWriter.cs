@@ -13,7 +13,9 @@
 using MetaDataXMLGenerator.Core.Config;
 using MetaDataXMLGenerator.Core.Constants;
 using MetaDataXMLGenerator.Core.Models;
+using System.IO;
 using System.Xml;
+using static MetaDataXMLGenerator.Core.Services.DirectoryAndFileReader;
 
 namespace MetaDataXMLGenerator.Core.Services;
 
@@ -28,7 +30,8 @@ public static class MetaDataFileWriter
     #endregion
 
     #region Properties
-
+    public delegate void FileDestinationChanged(string FullFileName);
+    public static event FileDestinationChanged? OnFileDestinationChanged;
     #endregion
 
     #region Constructor
@@ -77,6 +80,10 @@ public static class MetaDataFileWriter
             }
             doc.AppendChild(docRoot);
             doc.Save(@$"{pathForMetaDataXml}{ConstantStrings.METADATAXMLFILENAME}");
+            if (OnFileDestinationChanged != null)
+            {
+                OnFileDestinationChanged(@$"{pathForMetaDataXml}{ConstantStrings.METADATAXMLFILENAME}");
+            }
         }
     }
     #endregion

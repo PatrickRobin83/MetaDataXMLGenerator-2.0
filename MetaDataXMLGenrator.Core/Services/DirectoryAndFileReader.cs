@@ -115,6 +115,7 @@ public class DirectoryAndFileReader
             {
                 OnNumberOfFilesChanged(this, i, counter);
             }
+           
 
             
 

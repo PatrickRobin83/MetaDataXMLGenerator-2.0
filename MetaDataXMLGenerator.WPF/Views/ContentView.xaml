@@ -45,7 +45,8 @@
             <TextBlock Text=" von "/>
             <TextBlock Text="{Binding NumberOfFiles}"/>
             <TextBlock Text=" Dateien verarbeitet"/>
-
         </StackPanel>
+        <TextBlock TextAlignment="Center" Text="{Binding CurrentXMLFullFilename}" Visibility="{Binding CurrentXMLFullFilenameVisibility, 
+            Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </StackPanel>
 </UserControl>

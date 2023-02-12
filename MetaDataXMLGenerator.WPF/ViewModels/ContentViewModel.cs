@@ -15,6 +15,7 @@ using CommunityToolkit.Mvvm.Input;
 using MetaDataXMLGenerator.Core.Config;
 using MetaDataXMLGenerator.Core.Constants;
 using MetaDataXMLGenerator.Core.Services;
+using ReactiveUI;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using FolderBrowserDialog = FolderBrowserEx.FolderBrowserDialog;
@@ -49,6 +50,10 @@ public partial class ContentViewModel
     private float _result;
     [ObservableProperty] 
     private bool _progressVisibility;
+    [ObservableProperty]
+    private string _currentXMLFullFilename;
+    [ObservableProperty]
+    private bool _currentXMLFullFilenameVisibility;
 
 
     #endregion
@@ -90,9 +95,10 @@ public partial class ContentViewModel
     {
         DirectoryAndFileReader dafr = new DirectoryAndFileReader(LocalPath);
         dafr.OnNumberOfFilesChanged += OnNumberOfFilesChanged;
+        MetaDataFileWriter.OnFileDestinationChanged += OnFileDestinationChanged;
         ProgressVisibility = true;
         dafr.Run();
-
+        CurrentXMLFullFilenameVisibility = true;
     }
 
     private void OnNumberOfFilesChanged(object sender, int e, int c)
@@ -104,9 +110,20 @@ public partial class ContentViewModel
         if (CurrentProgressValue >= 100)
         {
             ProgressVisibility = false;
+            CurrentXMLFullFilenameVisibility= false;
         }
 
     }
+
+   private void OnFileDestinationChanged(string fileFullName)
+    {
+        if (fileFullName.Length >= 50)
+        {
+            fileFullName = "...\\" + fileFullName.Substring(fileFullName.Length - 50);
+        }
+        CurrentXMLFullFilename = fileFullName;
+    }
+
     #endregion
 
 }
